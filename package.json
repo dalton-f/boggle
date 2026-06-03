@@ -1,0 +1,33 @@
+{
+  "name": "boggle",
+  "version": "1.0.0",
+  "description": "An online version of the game Boggle, a word game in which players try to find as many words as they can from a grid of lettered dice.",
+  "license": "MIT",
+  "author": "Dalton",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npx mix watch"
+  },
+  "prettier": {
+    "plugins": [
+      "prettier-plugin-tailwindcss"
+    ]
+  },
+  "overrides": {
+    "webpack": "5.93.0"
+  },
+  "dependencies": {
+    "@tailwindcss/postcss": "^4.3.0",
+    "postcss": "^8.5.15",
+    "tailwindcss": "^4.3.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.4.1",
+    "globals": "^17.6.0",
+    "laravel-mix": "^6.0.49",
+    "prettier": "^3.8.3",
+    "prettier-plugin-tailwindcss": "^0.8.0"
+  }
+}
