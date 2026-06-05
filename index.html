@@ -9,7 +9,7 @@
 
     <script src="static/js/app.js" defer></script>
   </head>
-  <body class="grid place-items-center min-block-svh">
+  <body class="grid place-items-center p-5 min-block-svh">
     <main class="grid grid-cols-[max-content_320px] gap-4">
       <div class="flex flex-col gap-4">
         <!-- Game Title + Description -->
@@ -234,18 +234,19 @@
                   -
                 </button>
 
-                <label for="gridSize" class="sr-only">Grid size (4-6):</label>
+                <label for="gridSizeSelector" class="sr-only"
+                  >Grid size (4-6):</label
+                >
 
-                <input
-                  type="number"
-                  name="gridSize"
-                  id="gridSize"
-                  min="4"
-                  max="6"
-                  value="4"
-                  class="text-center"
-                  required
-                />
+                <select
+                  name="gridSizeSelector"
+                  id="gridSizeSelector"
+                  class="appearance-none"
+                >
+                  <option value="4x4" selected>4 x 4</option>
+                  <option value="5x5">5 x 5</option>
+                  <option value="6x6">6 x 6</option>
+                </select>
 
                 <button
                   class="flex aspect-square w-10 cursor-pointer items-center justify-center rounded-full border border-black/20 bg-white font-mono text-3xl"
@@ -265,11 +266,15 @@
                   -
                 </button>
 
-                <label for="timeLimit" class="sr-only"
+                <label for="timeLimitSelector" class="sr-only"
                   >Time limit of the game (3 minutes - 5 minutes):</label
                 >
 
-                <select name="timeLimit" id="timeLimit" class="appearance-none">
+                <select
+                  name="timeLimitSelector"
+                  id="timeLimitSelector"
+                  class="appearance-none"
+                >
                   <option value="3" selected>03:00</option>
                   <option value="4">04:00</option>
                   <option value="5">05:00</option>
