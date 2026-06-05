@@ -9,14 +9,14 @@
 
     <script src="static/js/app.js" defer></script>
   </head>
-  <body class="grid place-items-center p-5 min-block-svh">
-    <main class="grid grid-cols-[max-content_320px] gap-4">
+  <body class="xs:p-5 grid place-items-center min-block-svh">
+    <main class="grid gap-4 lg:grid-cols-[max-content_320px]">
       <div class="flex flex-col gap-4">
         <!-- Game Title + Description -->
         <div
-          class="flex w-full max-w-[36rem] max-w-xl flex-col rounded-3xl bg-slate-200 p-8"
+          class="xs:p-4 flex w-full max-w-[36rem] max-w-xl flex-col rounded-lg bg-slate-200 p-2 md:rounded-3xl md:p-8"
         >
-          <h1 class="pb-2 text-3xl font-bold">Boggle</h1>
+          <h1 class="pb-2 text-xl font-bold md:text-3xl">Boggle</h1>
 
           <p class="py-2">
             Drag or click to find as many words as you can before time runs out.
@@ -25,140 +25,145 @@
         </div>
 
         <!-- Game Board -->
-        <div class="flex h-full flex-col gap-4 rounded-3xl bg-slate-200 p-8">
-          <div class="flex items-center justify-between text-3xl font-bold">
+        <div
+          class="xs:p-4 flex h-full flex-col gap-10 rounded-lg bg-slate-200 p-2 md:rounded-3xl md:p-8 lg:gap-4"
+        >
+          <div
+            class="flex items-center justify-between text-lg font-bold md:text-3xl"
+          >
             <p>03:00 / 03:00</p>
             <p>0 points</p>
           </div>
 
-          <div class="m-auto grid grid-cols-[repeat(4,_74px)] gap-2">
+          <div
+            class="m-auto grid grid-cols-[repeat(4,_70px)] gap-2 md:grid-cols-[repeat(4,_74px)]"
+          >
             <button
-              class="cursor-pointer rounded-lg bg-gray-300 p-1.25 text-4xl font-bold"
+              class="xs:text-2xl grid cursor-pointer place-items-center rounded-lg bg-gray-300 p-1.25 text-xl font-bold sm:text-3xl md:text-4xl"
             >
               <span
-                class="grid aspect-square w-16 place-items-center rounded-full bg-white"
-                >M</span
+                class="grid aspect-square w-15 place-items-center rounded-full bg-white"
+                >A</span
               >
             </button>
             <button
-              class="cursor-pointer rounded-lg bg-gray-300 p-1.25 text-4xl font-bold"
+              class="xs:text-2xl grid cursor-pointer place-items-center rounded-lg bg-gray-300 p-1.25 text-xl font-bold sm:text-3xl md:text-4xl"
             >
               <span
-                class="grid aspect-square w-16 place-items-center rounded-full bg-white"
-                >M</span
+                class="grid aspect-square w-15 place-items-center rounded-full bg-white"
+                >A</span
               >
             </button>
             <button
-              class="cursor-pointer rounded-lg bg-gray-300 p-1.25 text-4xl font-bold"
+              class="xs:text-2xl grid cursor-pointer place-items-center rounded-lg bg-gray-300 p-1.25 text-xl font-bold sm:text-3xl md:text-4xl"
             >
               <span
-                class="grid aspect-square w-16 place-items-center rounded-full bg-white"
-                >M</span
+                class="grid aspect-square w-15 place-items-center rounded-full bg-white"
+                >A</span
               >
             </button>
             <button
-              class="cursor-pointer rounded-lg bg-gray-300 p-1.25 text-4xl font-bold"
+              class="xs:text-2xl grid cursor-pointer place-items-center rounded-lg bg-gray-300 p-1.25 text-xl font-bold sm:text-3xl md:text-4xl"
             >
               <span
-                class="grid aspect-square w-16 place-items-center rounded-full bg-white"
-                >M</span
+                class="grid aspect-square w-15 place-items-center rounded-full bg-white"
+                >A</span
               >
             </button>
             <button
-              class="cursor-pointer rounded-lg bg-gray-300 p-1.25 text-4xl font-bold"
+              class="xs:text-2xl grid cursor-pointer place-items-center rounded-lg bg-gray-300 p-1.25 text-xl font-bold sm:text-3xl md:text-4xl"
             >
               <span
-                class="grid aspect-square w-16 place-items-center rounded-full bg-white"
-                >M</span
+                class="grid aspect-square w-15 place-items-center rounded-full bg-white"
+                >A</span
               >
             </button>
             <button
-              class="cursor-pointer rounded-lg bg-gray-300 p-1.25 text-4xl font-bold"
+              class="xs:text-2xl grid cursor-pointer place-items-center rounded-lg bg-gray-300 p-1.25 text-xl font-bold sm:text-3xl md:text-4xl"
             >
               <span
-                class="grid aspect-square w-16 place-items-center rounded-full bg-white"
-                >M</span
-              >
-            </button>
-
-            <button
-              class="cursor-pointer rounded-lg bg-gray-300 p-1.25 text-4xl font-bold"
-            >
-              <span
-                class="grid aspect-square w-16 place-items-center rounded-full bg-white"
-                >M</span
+                class="grid aspect-square w-15 place-items-center rounded-full bg-white"
+                >A</span
               >
             </button>
             <button
-              class="cursor-pointer rounded-lg bg-gray-300 p-1.25 text-4xl font-bold"
+              class="xs:text-2xl grid cursor-pointer place-items-center rounded-lg bg-gray-300 p-1.25 text-xl font-bold sm:text-3xl md:text-4xl"
             >
               <span
-                class="grid aspect-square w-16 place-items-center rounded-full bg-white"
-                >M</span
+                class="grid aspect-square w-15 place-items-center rounded-full bg-white"
+                >A</span
               >
             </button>
             <button
-              class="cursor-pointer rounded-lg bg-gray-300 p-1.25 text-4xl font-bold"
+              class="xs:text-2xl grid cursor-pointer place-items-center rounded-lg bg-gray-300 p-1.25 text-xl font-bold sm:text-3xl md:text-4xl"
             >
               <span
-                class="grid aspect-square w-16 place-items-center rounded-full bg-white"
-                >M</span
+                class="grid aspect-square w-15 place-items-center rounded-full bg-white"
+                >A</span
               >
             </button>
             <button
-              class="cursor-pointer rounded-lg bg-gray-300 p-1.25 text-4xl font-bold"
+              class="xs:text-2xl grid cursor-pointer place-items-center rounded-lg bg-gray-300 p-1.25 text-xl font-bold sm:text-3xl md:text-4xl"
             >
               <span
-                class="grid aspect-square w-16 place-items-center rounded-full bg-white"
-                >M</span
+                class="grid aspect-square w-15 place-items-center rounded-full bg-white"
+                >A</span
               >
             </button>
             <button
-              class="cursor-pointer rounded-lg bg-gray-300 p-1.25 text-4xl font-bold"
+              class="xs:text-2xl grid cursor-pointer place-items-center rounded-lg bg-gray-300 p-1.25 text-xl font-bold sm:text-3xl md:text-4xl"
             >
               <span
-                class="grid aspect-square w-16 place-items-center rounded-full bg-white"
-                >M</span
+                class="grid aspect-square w-15 place-items-center rounded-full bg-white"
+                >A</span
               >
             </button>
             <button
-              class="cursor-pointer rounded-lg bg-gray-300 p-1.25 text-4xl font-bold"
+              class="xs:text-2xl grid cursor-pointer place-items-center rounded-lg bg-gray-300 p-1.25 text-xl font-bold sm:text-3xl md:text-4xl"
             >
               <span
-                class="grid aspect-square w-16 place-items-center rounded-full bg-white"
-                >M</span
+                class="grid aspect-square w-15 place-items-center rounded-full bg-white"
+                >A</span
               >
             </button>
             <button
-              class="cursor-pointer rounded-lg bg-gray-300 p-1.25 text-4xl font-bold"
+              class="xs:text-2xl grid cursor-pointer place-items-center rounded-lg bg-gray-300 p-1.25 text-xl font-bold sm:text-3xl md:text-4xl"
             >
               <span
-                class="grid aspect-square w-16 place-items-center rounded-full bg-white"
-                >M</span
+                class="grid aspect-square w-15 place-items-center rounded-full bg-white"
+                >A</span
               >
             </button>
             <button
-              class="cursor-pointer rounded-lg bg-gray-300 p-1.25 text-4xl font-bold"
+              class="xs:text-2xl grid cursor-pointer place-items-center rounded-lg bg-gray-300 p-1.25 text-xl font-bold sm:text-3xl md:text-4xl"
             >
               <span
-                class="grid aspect-square w-16 place-items-center rounded-full bg-white"
-                >M</span
+                class="grid aspect-square w-15 place-items-center rounded-full bg-white"
+                >A</span
               >
             </button>
             <button
-              class="cursor-pointer rounded-lg bg-gray-300 p-1.25 text-4xl font-bold"
+              class="xs:text-2xl grid cursor-pointer place-items-center rounded-lg bg-gray-300 p-1.25 text-xl font-bold sm:text-3xl md:text-4xl"
             >
               <span
-                class="grid aspect-square w-16 place-items-center rounded-full bg-white"
-                >M</span
+                class="grid aspect-square w-15 place-items-center rounded-full bg-white"
+                >A</span
               >
             </button>
             <button
-              class="cursor-pointer rounded-lg bg-gray-300 p-1.25 text-4xl font-bold"
+              class="xs:text-2xl grid cursor-pointer place-items-center rounded-lg bg-gray-300 p-1.25 text-xl font-bold sm:text-3xl md:text-4xl"
             >
               <span
-                class="grid aspect-square w-16 place-items-center rounded-full bg-white"
-                >M</span
+                class="grid aspect-square w-15 place-items-center rounded-full bg-white"
+                >A</span
+              >
+            </button>
+            <button
+              class="xs:text-2xl grid cursor-pointer place-items-center rounded-lg bg-gray-300 p-1.25 text-xl font-bold sm:text-3xl md:text-4xl"
+            >
+              <span
+                class="grid aspect-square w-15 place-items-center rounded-full bg-white"
+                >A</span
               >
             </button>
           </div>
@@ -168,16 +173,16 @@
       <div class="grid gap-4">
         <!-- Correct Guesses -->
         <div
-          class="divide-y divide-black/20 rounded-3xl bg-slate-200 p-8 font-bold"
+          class="xs:p-4 divide-y divide-black/20 rounded-lg bg-slate-200 p-2 font-bold md:rounded-3xl md:p-8"
         >
-          <p class="pb-2 text-xl">Correct Guesses</p>
+          <p class="pb-2 text-lg md:text-xl">Correct Guesses</p>
 
           <!-- 3 letters -->
           <div class="flex flex-col gap-2 py-2">
             <p class="text-lg">3 letters:</p>
 
             <div
-              class="no-scrollbar flex min-h-[26px] items-center gap-2 overflow-x-scroll"
+              class="flex min-h-[26px] scrollbar-none items-center gap-2 overflow-x-scroll"
             ></div>
           </div>
 
@@ -186,7 +191,7 @@
             <p class="text-lg">4 letters:</p>
 
             <div
-              class="no-scrollbar flex min-h-[26px] items-center gap-2 overflow-x-scroll"
+              class="flex min-h-[26px] scrollbar-none items-center gap-2 overflow-x-scroll"
             ></div>
           </div>
 
@@ -195,7 +200,7 @@
             <p class="text-lg">5 letters:</p>
 
             <div
-              class="no-scrollbar flex min-h-[26px] items-center gap-2 overflow-x-scroll"
+              class="flex min-h-[26px] scrollbar-none items-center gap-2 overflow-x-scroll"
             ></div>
           </div>
 
@@ -204,7 +209,7 @@
             <p class="text-lg">6 letters:</p>
 
             <div
-              class="no-scrollbar flex min-h-[26px] items-center gap-2 overflow-x-scroll"
+              class="flex min-h-[26px] scrollbar-none items-center gap-2 overflow-x-scroll"
             ></div>
           </div>
 
@@ -213,19 +218,19 @@
             <p class="text-lg">7+ letters:</p>
 
             <div
-              class="no-scrollbar flex min-h-[26px] items-center gap-2 overflow-x-scroll"
+              class="flex min-h-[26px] scrollbar-none items-center gap-2 overflow-x-scroll"
             ></div>
           </div>
         </div>
 
         <!-- Settings -->
-        <form class="flex flex-col gap-2 rounded-3xl bg-slate-200 p-8">
-          <fieldset>
-            <legend class="pb-2 text-xl font-bold">Settings</legend>
+        <form class="xs:p-4 rounded-lg bg-slate-200 p-2 md:rounded-3xl md:p-8">
+          <fieldse class="flex flex-col gap-2">
+            <legend class="pb-2 text-lg font-bold md:text-xl">Settings</legend>
 
-            <div class="flex flex-col gap-2">
+            <div class="flex flex-col gap-2 md:flex-row lg:flex-col">
               <div
-                class="flex items-center justify-between rounded-full border border-black/20 px-2 py-2 text-xl font-bold"
+                class="flex w-full items-center justify-between rounded-full border border-black/20 px-2 py-2 text-lg font-bold md:text-xl"
               >
                 <button
                   class="flex aspect-square w-10 cursor-pointer items-center justify-center rounded-full border border-black/20 bg-white font-mono text-3xl"
@@ -257,7 +262,7 @@
               </div>
 
               <div
-                class="mb-2 flex items-center justify-between rounded-full border border-black/20 px-2 py-2 text-xl font-bold"
+                class="mb-2 flex w-full items-center justify-between rounded-full border border-black/20 px-2 py-2 text-lg font-bold md:text-xl"
               >
                 <button
                   class="flex aspect-square w-10 cursor-pointer items-center justify-center rounded-full border border-black/20 bg-white font-mono text-3xl"
@@ -290,12 +295,12 @@
             </div>
 
             <button
-              class="flex w-full cursor-pointer items-center justify-center rounded-3xl bg-slate-900 p-4 font-bold text-white uppercase"
+              class="flex w-full cursor-pointer items-center justify-center rounded-lg bg-slate-900 p-4 font-bold text-white uppercase md:rounded-3xl"
               type="submit"
             >
               + New Game
             </button>
-          </fieldset>
+          </fieldse>
         </form>
       </div>
     </main>

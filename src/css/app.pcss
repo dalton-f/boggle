@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
+@theme {
+  --breakpoint-xs: 23.4375rem;
+}
+
 @layer utilities {
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"]::-webkit-outer-spin-button {
     @apply appearance-none;
   }
-}
-
-@utility no-scrollbar {
-  @apply [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
 }
