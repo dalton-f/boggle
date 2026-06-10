@@ -20,7 +20,22 @@ __webpack_require__.r(__webpack_exports__);
   \***********************/
 /***/ (() => {
 
-console.log("Hello World!");
+var gridSizeDecreaseButton = document.getElementById("gridSizeDecreaseButton");
+var gridSizeIncreaseButton = document.getElementById("gridSizeIncreaseButton");
+var gridSizeSelector = document.getElementById("gridSizeSelector");
+var timeLimitDecreaseButton = document.getElementById("timeLimitDecreaseButton");
+var timeLimitIncreaseButton = document.getElementById("timeLimitIncreaseButton");
+var timeLimitSelector = document.getElementById("timeLimitSelector");
+var setupSelectorControls = function setupSelectorControls(decreaseButton, increaseButton, selector) {
+  decreaseButton.addEventListener("click", function () {
+    if (selector.selectedIndex > 0) selector.selectedIndex--;
+  });
+  increaseButton.addEventListener("click", function () {
+    if (selector.selectedIndex < selector.options.length - 1) selector.selectedIndex++;
+  });
+};
+setupSelectorControls(gridSizeDecreaseButton, gridSizeIncreaseButton, gridSizeSelector);
+setupSelectorControls(timeLimitDecreaseButton, timeLimitIncreaseButton, timeLimitSelector);
 
 /***/ })
 
