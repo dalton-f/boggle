@@ -550,6 +550,16 @@
       grid-template-columns: repeat(4, 74px);
     }
   }
+  .md\:grid-cols-\[repeat\(5\,_74px\)\] {
+    @media (width >= 48rem) {
+      grid-template-columns: repeat(5, 74px);
+    }
+  }
+  .md\:grid-cols-\[repeat\(6\,_74px\)\] {
+    @media (width >= 48rem) {
+      grid-template-columns: repeat(6, 74px);
+    }
+  }
   .md\:flex-row {
     @media (width >= 48rem) {
       flex-direction: row;
@@ -596,6 +606,11 @@
   .lg\:gap-0 {
     @media (width >= 64rem) {
       gap: calc(var(--spacing) * 0);
+    }
+  }
+  .lg\:gap-4 {
+    @media (width >= 64rem) {
+      gap: calc(var(--spacing) * 4);
     }
   }
 }
