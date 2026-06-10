@@ -608,11 +608,6 @@
       gap: calc(var(--spacing) * 0);
     }
   }
-  .lg\:gap-4 {
-    @media (width >= 64rem) {
-      gap: calc(var(--spacing) * 4);
-    }
-  }
 }
 @layer utilities {
   input[type="number"]::-webkit-inner-spin-button,

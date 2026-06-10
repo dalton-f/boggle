@@ -1,5 +1,8 @@
 /* eslint-disable no-magic-numbers */
 
+// eslint-disable-next-line no-undef
+const { Trie } = require("@datastructures-js/trie");
+
 // Post 2012 standard dice used for 4x4 Boggle
 const BOGGLE_DICE = [
   ["a", "a", "e", "e", "g", "n"],
@@ -119,6 +122,30 @@ const SPAN_CLASSES = [
   "bg-white",
 ];
 
+/**
+ * All 8 possible movement directions (including diagonals)
+ * used to traverse adjacent cells in the Boggle grid.
+ *
+ * @constant {number[][]}
+ */
+const DIRS = [
+  [0, 1],
+  [1, 0],
+  [0, -1],
+  [-1, 0],
+  [1, 1],
+  [1, -1],
+  [-1, 1],
+  [-1, -1],
+];
+
+/**
+ * Minimum length required for a word to be considered valid.
+ *
+ * @constant {number}
+ */
+const MIN_WORD_LENGTH = 3;
+
 const gridSizeDecreaseButton = document.getElementById(
   "gridSizeDecreaseButton",
 );
@@ -170,7 +197,84 @@ settingsForm.addEventListener("submit", (e) => {
   startNewBoggleGame(gridSizeSelector.value, timeLimitSelector.value);
 });
 
-const startNewBoggleGame = (gridSize, timeLimit) => {
+/**
+ * Loads dictionary words from a text file.
+ *
+ * @async
+ * @function loadDictionary
+ * @returns {Promise<string[]>} Array of dictionary words
+ */
+const loadDictionary = async () => {
+  const response = await fetch("static/data/ospd4.txt");
+  const text = await response.text();
+
+  return text.split("\n");
+};
+
+/**
+ * Solves the Boggle board by finding all valid dictionary words.
+ *
+ * Uses DFS backtracking combined with Trie prefix pruning for efficiency.
+ *
+ * @function solveBoggle
+ * @param {string[][]} grid - 2D character grid representing the Boggle board
+ * @param {Trie} dictionaryTrie - Trie containing valid dictionary words
+ * @returns {Set<string>} Set of all valid words found in the grid
+ */
+const solveBoggle = (grid, dictionaryTrie) => {
+  const results = new Set();
+
+  const rows = grid.length;
+  const cols = grid[0].length;
+
+  /**
+   * Depth-first search helper to explore all valid paths from a cell.
+   *
+   * @param {number} r - Current row index
+   * @param {number} c - Current column index
+   * @param {boolean[][]} visited - Tracks visited cells in current path
+   * @param {string} path - Current constructed word
+   */
+  const exploreWordPaths = (r, c, visited, path) => {
+    path += grid[r][c];
+
+    visited[r][c] = true;
+
+    if (!dictionaryTrie.hasPrefix(path)) {
+      visited[r][c] = false;
+      return;
+    }
+
+    if (path.length >= MIN_WORD_LENGTH && dictionaryTrie.has(path))
+      results.add(path);
+
+    for (const [dr, dc] of DIRS) {
+      const nr = r + dr;
+      const nc = c + dc;
+
+      if (nr < 0 || nr >= rows || nc < 0 || nc >= cols || visited[nr][nc])
+        continue;
+
+      exploreWordPaths(nr, nc, visited, path);
+    }
+
+    visited[r][c] = false;
+  };
+
+  for (let i = 0; i < rows; i++) {
+    for (let j = 0; j < cols; j++) {
+      const visited = Array.from({ length: rows }, () =>
+        Array(cols).fill(false),
+      );
+
+      exploreWordPaths(i, j, visited, "");
+    }
+  }
+
+  return results;
+};
+
+const startNewBoggleGame = async (gridSize, timeLimit) => {
   console.log(`Grid Size: ${gridSize} | Time Limit: ${timeLimit}`);
 
   const dice = DICE_SETS[gridSize];
@@ -184,6 +288,14 @@ const startNewBoggleGame = (gridSize, timeLimit) => {
   console.log(tray);
 
   displayBoggleGrid(tray);
+
+  const dictionary = await loadDictionary("static/data/ospd4.txt");
+
+  const dictionaryTrie = Trie.fromArray(dictionary);
+
+  const possibleSolutions = solveBoggle(tray, dictionaryTrie);
+
+  console.log(possibleSolutions);
 };
 
 /**
@@ -254,6 +366,7 @@ const displayBoggleGrid = (grid) => {
 
       span.textContent = value.toUpperCase();
 
+      // TODO: Clean this up
       if (value === "qu") span.textContent = "Qu";
       if (value === "an") span.textContent = "An";
       if (value === "er") span.textContent = "Er";
@@ -266,6 +379,7 @@ const displayBoggleGrid = (grid) => {
     }
   }
 
+  // TODO: Clean this up
   gridContainer.appendChild(fragment);
 
   gridContainer.classList.remove("md:grid-cols-[repeat(4,_74px)]");
