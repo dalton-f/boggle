@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
-const mix = require("laravel-mix");
+import mix from "laravel-mix";
+import tailwindcss from "@tailwindcss/postcss";
 
 mix.webpackConfig({
   watchOptions: {
@@ -9,7 +10,7 @@ mix.webpackConfig({
 
 mix
   .js("src/js/app.js", "static/js")
-  .postCss("src/css/app.pcss", "static/css", [require("@tailwindcss/postcss")]);
+  .postCss("src/css/app.pcss", "static/css", [tailwindcss]);
 
 mix.copyDirectory("src/data", "static/data");
 

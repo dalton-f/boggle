@@ -4,7 +4,7 @@
   "description": "An online version of the game Boggle, a word game in which players try to find as many words as they can from a grid of lettered dice.",
   "license": "MIT",
   "author": "Dalton",
-  "type": "commonjs",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "dev": "npx mix watch"
