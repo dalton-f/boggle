@@ -15,6 +15,7 @@ import { Trie } from "@datastructures-js/trie";
  * @function loadDictionaryFromFile
  * @param {string} filePath The path of the dictionary text file
  * @returns {Promise<string[]>} Array of dictionary words
+ * @throws {TypeError} If filePath is not a string.
  */
 const loadDictionaryFromFile = async (filePath = DEFAULT_DICTIONARY_PATH) => {
   if (typeof filePath !== "string") {
@@ -55,6 +56,7 @@ const getDictionaryTrie = async () => {
  * @function solveBoggle
  * @param {string[][]} grid - 2D character grid representing the Boggle board
  * @returns {Promise<Set<string>>} A Promise that resolves to the set of all valid words found in the grid.
+ * @throws {TypeError} If grid is not a 2D array of strings.
  */
 export const solveBoggle = async (grid) => {
   const dictionaryTrie = await getDictionaryTrie();

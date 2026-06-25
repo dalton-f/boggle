@@ -8,8 +8,9 @@ import { VALID_GRID_SIZES } from "../utilities/constants.js";
  * Note: The function assumes that the input dice array contains exactly 16, 25, or 36 dice, each with 6 faces.
  *
  * @function generateRandomBoggleTray
- * @param {string[][]} dice - Array of 16, 25, or 36 dice, each die is an array of 6 letters
+ * @param {string[][]} dice - Array of 16, 25, or 36 dice, each die is an array of 6 letters#
  * @returns {string[][]} 4x4, 5x5, or 6x6 grid of letters representing the Boggle tray
+ * @throws {TypeError} If dice is not a 2D array of strings
  */
 export const generateRandomBoggleTray = (dice) => {
   const grid = [];

@@ -30,13 +30,22 @@ const timeLimitSelector = document.getElementById("timeLimitSelector");
  * @param {HTMLButtonElement} increaseButton - Button that selects the next option.
  * @param {HTMLSelectElement} select - The select element to control.
  * @returns {void}
+ * @throws {TypeError} If decreaseButton or increaseButton are not found.
+ * @throws {TypeError} If select is not found.
  */
 const setupSelectorControls = (decreaseButton, increaseButton, select) => {
-  if (!decreaseButton) throw new Error("Decrease button element not found.");
+  if (!decreaseButton || !(decreaseButton instanceof HTMLButtonElement))
+    throw new TypeError(
+      "Decrease button element not found or not HTMLButtonElement.",
+    );
 
-  if (!increaseButton) throw new Error("Increase button element not found.");
+  if (!increaseButton || !(increaseButton instanceof HTMLButtonElement))
+    throw new TypeError(
+      "Increase button element not found or not HTMLButtonElement.",
+    );
 
-  if (!select) throw new Error("Select element not found.");
+  if (!select || !(select instanceof HTMLSelectElement))
+    throw new TypeError("Select element not found or not HTMLSelectElement.");
 
   // Any "decrease" button linked to a select element will have to decrement the selected index
   decreaseButton.addEventListener("click", () => {
@@ -60,6 +69,7 @@ const setupSelectorControls = (decreaseButton, increaseButton, select) => {
  *   Callback invoked when the settings form is submitted.
  *   Receives the selected grid size and time limit values.
  * @returns {void}
+ * @throws {TypeError} If startNewBoggleGame is not a function.
  */
 export const setupSettingsControls = (startNewBoggleGame) => {
   if (typeof startNewBoggleGame !== "function") {
