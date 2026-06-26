@@ -4,9 +4,13 @@
   --breakpoint-xs: 23.4375rem;
 }
 
-@layer utilities {
-  input[type="number"]::-webkit-inner-spin-button,
-  input[type="number"]::-webkit-outer-spin-button {
-    @apply appearance-none;
-  }
+/* Remove spinners from input type number */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  @apply appearance-none;
+}
+
+/* Custom selection utility to handle nested HTML elements */
+.selected-tile > span {
+  @apply bg-gray-500 text-white;
 }

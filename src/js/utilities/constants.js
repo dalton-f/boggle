@@ -157,6 +157,9 @@ export const GRID_CELL_CONTENT_CLASSES = [
   "place-items-center",
   "rounded-full",
   "bg-white",
+  "transition-colors",
+  "duration-100",
+  "ease-linear",
 ];
 
 /**

@@ -439,8 +439,6 @@ function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present,
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
-/* eslint-disable no-magic-numbers */
-
 
 
 
@@ -453,6 +451,8 @@ var startNewBoggleGame = /*#__PURE__*/function () {
       while (1) switch (_context.n) {
         case 0:
           console.log("Grid Size: ".concat(gridSize, " | Time Limit: ").concat(timeLimit));
+
+          // Get the correct dice set based on the grid size, either standard, big, or super big
           dice = _utilities_constants_js__WEBPACK_IMPORTED_MODULE_0__.DICE_SET_BY_GRID_SIZE[gridSize];
           if (dice) {
             _context.n = 1;
@@ -460,9 +460,14 @@ var startNewBoggleGame = /*#__PURE__*/function () {
           }
           throw new Error("Unsupported grid size: ".concat(gridSize));
         case 1:
+          // Generate a new dice tray for the game using the determine dice set
           tray = (0,_components_trayGenerator_js__WEBPACK_IMPORTED_MODULE_2__.generateRandomBoggleTray)(dice);
           console.log(tray);
+
+          // Display it onto the game board
           (0,_components_gameBoard_js__WEBPACK_IMPORTED_MODULE_3__.displayBoggleGrid)(tray);
+
+          // Generate all possible solutions from the generated tray
           _context.n = 2;
           return (0,_components_solver_js__WEBPACK_IMPORTED_MODULE_4__.solveBoggle)(tray);
         case 2:
@@ -499,7 +504,193 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
 function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+/* eslint-disable no-magic-numbers */
 
+
+var buttons = [];
+var selectionState = {
+  isDragging: false,
+  didDrag: false,
+  selectedPath: []
+};
+
+/**
+ * Checks whether two tiles are adjacent (including diagonals).
+ *
+ * A tile is considered adjacent if it is:
+ * - Within 1 row distance AND
+ * - Within 1 column distance AND
+ * - Not the same tile
+ *
+ * @param {{row: number, col: number}} a - First tile.
+ * @param {{row: number, col: number}} b - Second tile.
+ * @returns {boolean} True if tiles are adjacent.
+ * @throws {TypeError} If inputs are missing or invalid.
+ */
+var isAdjacent = function isAdjacent(a, b) {
+  if (!a || !b) throw new TypeError("Both tile arguments are required");
+  if (!Number.isInteger(a.row) || !Number.isInteger(a.col) || !Number.isInteger(b.row) || !Number.isInteger(b.col)) throw new TypeError("Tile coordinates must be integers");
+  var sameTile = a.row === b.row && a.col === b.col;
+  return Math.abs(a.row - b.row) <= 1 && Math.abs(a.col - b.col) <= 1 && !sameTile;
+};
+
+/**
+ * Clears the entire current selection path and removes UI highlighting.
+ *
+ * @returns {void}
+ */
+var clearSelection = function clearSelection() {
+  selectionState.selectedPath.forEach(function (_ref) {
+    var row = _ref.row,
+      col = _ref.col;
+    buttons[row][col].classList.remove("selected-tile");
+  });
+  selectionState.selectedPath = [];
+};
+
+/**
+ * Selects a tile and updates the selection path + UI state.
+ *
+ * @param {number} row - Row index of the tile.
+ * @param {number} col - Column index of the tile.
+ * @returns {void}
+ * @throws {TypeError} If row or col is not an integer.
+ */
+var selectTile = function selectTile(row, col) {
+  if (!Number.isInteger(row)) throw new TypeError("Expected row to be an integer, received: ".concat(row));
+  if (!Number.isInteger(col)) throw new TypeError("Expected col to be an integer, received: ".concat(col));
+  selectionState.selectedPath.push({
+    row: row,
+    col: col
+  });
+  buttons[row][col].classList.add("selected-tile");
+  console.log(selectionState.selectedPath);
+};
+
+/**
+ * Removes the most recently selected tile from the selection path
+ * and updates its visual state.
+ *
+ * @returns {void}
+ */
+var deselectTile = function deselectTile() {
+  var last = selectionState.selectedPath.pop();
+  if (last) buttons[last.row][last.col].classList.remove("selected-tile");
+  console.log(selectionState.selectedPath);
+};
+
+/**
+ * Checks whether a tile is already part of the current selection path.
+ *
+ * @param {number} row - Row index of the tile.
+ * @param {number} col - Column index of the tile.
+ * @returns {boolean} True if the tile exists in the selected path.
+ * @throws {TypeError} If row or col is not an integer.
+ */
+var alreadySelected = function alreadySelected(row, col) {
+  if (!Number.isInteger(row)) throw new TypeError("Expected row to be an integer, received: ".concat(row));
+  if (!Number.isInteger(col)) throw new TypeError("Expected col to be an integer, received: ".concat(col));
+  var path = selectionState.selectedPath;
+
+  // Guard: nothing selected yet
+  if (!path || path.length === 0) return false;
+  return path.some(function (tile) {
+    return tile.row === row && tile.col === col;
+  });
+};
+
+/**
+ * Handles selection of a tile in the grid.
+ *
+ * @param {number} row - Row index of the tile.
+ * @param {number} col - Column index of the tile.
+ * @returns {void}
+ * @throws {TypeError} When row or col is not an integer.
+ */
+var handleSelect = function handleSelect(row, col) {
+  if (!Number.isInteger(row)) throw new TypeError("Expected row to be an integer, received: ".concat(row));
+  if (!Number.isInteger(col)) throw new TypeError("Expected col to be an integer, received: ".concat(col));
+  var last = selectionState.selectedPath.at(-1);
+
+  // First tile
+  if (!last) {
+    selectTile(row, col);
+    return;
+  }
+
+  // Clicking same tile = undo last
+  if (last.row === row && last.col === col) {
+    deselectTile();
+    return;
+  }
+
+  // Allows user to deselect while dragging, since pointer will focus second last selection instead
+  var secondLast = selectionState.selectedPath.at(-2);
+  if (secondLast && secondLast.row === row && secondLast.col === col && selectionState.didDrag) {
+    deselectTile();
+    return;
+  }
+
+  // Clicking any already-selected tile = clear all
+  if (alreadySelected(row, col)) {
+    clearSelection();
+    selectTile(row, col);
+    return;
+  }
+
+  // Non-adjacent = clear all
+  if (!isAdjacent(last, {
+    row: row,
+    col: col
+  })) {
+    clearSelection();
+    if (selectionState.isDragging) selectTile(row, col);
+    return;
+  }
+  selectTile(row, col);
+};
+
+/**
+ * Attaches the event listeners required for selecting and dragging across
+ * tiles in the Boggle grid.
+ *
+ * Supports:
+ * - Keyboard selection via click events.
+ * - Pointer/touch selection via pointerdown.
+ * - Drag selection via pointerenter.
+ *
+ * @param {HTMLButtonElement} button - The tile button element.
+ * @param {number} i - The row index of the tile.
+ * @param {number} j - The column index of the tile.
+ * @returns {void}
+ * @throws {TypeError} If button is not a button element.
+ * @throws {TypeError} If i or j are not integers.
+ */
+var attachButtonListeners = function attachButtonListeners(button, i, j) {
+  if (!(button instanceof HTMLButtonElement)) throw new TypeError("Expected button to be an HTMLButtonElement.");
+  if (!Number.isInteger(i)) throw new TypeError("Expected i to be an integer.");
+  if (!Number.isInteger(j)) throw new TypeError("Expected j to be an integer.");
+  button.addEventListener("click", function (e) {
+    // Regular clicks are handled by pointer down, but this is needed to maintain keyboard accessibility
+    if (e.detail !== 0) return;
+    handleSelect(i, j);
+  });
+
+  // Click/tap starts selection
+  button.addEventListener("pointerdown", function (e) {
+    selectionState.isDragging = true;
+    selectionState.didDrag = false;
+    handleSelect(i, j);
+    e.preventDefault();
+  });
+
+  // Dragging across tiles
+  button.addEventListener("pointerenter", function () {
+    if (!selectionState.isDragging) return;
+    selectionState.didDrag = true;
+    handleSelect(i, j);
+  });
+};
 
 /**
  * Renders the Boggle grid on the webpage by creating a 4x4, 5x5, or 6x6 layout of cells based on the provided grid data.
@@ -507,7 +698,7 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
  *
  * @function displayBoggleGrid
  * @param {string[][]} grid
- * @returns
+ * @returns {void}
  */
 var displayBoggleGrid = function displayBoggleGrid(grid) {
   var _gridContainer$classL;
@@ -530,6 +721,7 @@ var displayBoggleGrid = function displayBoggleGrid(grid) {
   // Loop over the full grid length generating the buttons for each letter
   for (var i = 0; i < grid.length; i++) {
     var row = grid[i];
+    buttons[i] = [];
     for (var j = 0; j < row.length; j++) {
       var _button$classList, _span$classList;
       var value = row[j];
@@ -537,11 +729,15 @@ var displayBoggleGrid = function displayBoggleGrid(grid) {
       // The actual letter characters are within a span for additional styles
       var button = document.createElement("button");
       (_button$classList = button.classList).add.apply(_button$classList, _toConsumableArray(_utilities_constants_js__WEBPACK_IMPORTED_MODULE_0__.GRID_CELL_BUTTON_CLASSES));
+
+      // Add necessary event listeners to the button for the interactivity
+      attachButtonListeners(button, i, j);
       var span = document.createElement("span");
       (_span$classList = span.classList).add.apply(_span$classList, _toConsumableArray(_utilities_constants_js__WEBPACK_IMPORTED_MODULE_0__.GRID_CELL_CONTENT_CLASSES));
 
       // Converts special tiles like qu into a capitalised version eg. Qu or An
       span.textContent = _utilities_constants_js__WEBPACK_IMPORTED_MODULE_0__.SPECIAL_TILES.includes(value) ? value[0].toUpperCase() + value.slice(1) : value.toUpperCase();
+      buttons[i][j] = button;
       button.appendChild(span);
       fragment.appendChild(button);
     }
@@ -550,6 +746,14 @@ var displayBoggleGrid = function displayBoggleGrid(grid) {
   // Append the built fragment to the grid
   gridContainer.appendChild(fragment);
 };
+
+// Stop dragging
+window.addEventListener("pointerup", function () {
+  selectionState.isDragging = false;
+
+  // Fully clear only if a drag has been stopped
+  if (selectionState.didDrag) clearSelection();
+});
 
 /***/ }),
 
@@ -582,11 +786,13 @@ var timeLimitSelector = document.getElementById("timeLimitSelector");
  * @param {HTMLButtonElement} increaseButton - Button that selects the next option.
  * @param {HTMLSelectElement} select - The select element to control.
  * @returns {void}
+ * @throws {TypeError} If decreaseButton or increaseButton are not found.
+ * @throws {TypeError} If select is not found.
  */
 var setupSelectorControls = function setupSelectorControls(decreaseButton, increaseButton, select) {
-  if (!decreaseButton) throw new Error("Decrease button element not found.");
-  if (!increaseButton) throw new Error("Increase button element not found.");
-  if (!select) throw new Error("Select element not found.");
+  if (!decreaseButton || !(decreaseButton instanceof HTMLButtonElement)) throw new TypeError("Decrease button element not found or not HTMLButtonElement.");
+  if (!increaseButton || !(increaseButton instanceof HTMLButtonElement)) throw new TypeError("Increase button element not found or not HTMLButtonElement.");
+  if (!select || !(select instanceof HTMLSelectElement)) throw new TypeError("Select element not found or not HTMLSelectElement.");
 
   // Any "decrease" button linked to a select element will have to decrement the selected index
   decreaseButton.addEventListener("click", function () {
@@ -609,6 +815,7 @@ var setupSelectorControls = function setupSelectorControls(decreaseButton, incre
  *   Callback invoked when the settings form is submitted.
  *   Receives the selected grid size and time limit values.
  * @returns {void}
+ * @throws {TypeError} If startNewBoggleGame is not a function.
  */
 var setupSettingsControls = function setupSettingsControls(startNewBoggleGame) {
   if (typeof startNewBoggleGame !== "function") {
@@ -666,6 +873,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
  * @function loadDictionaryFromFile
  * @param {string} filePath The path of the dictionary text file
  * @returns {Promise<string[]>} Array of dictionary words
+ * @throws {TypeError} If filePath is not a string.
  */
 var loadDictionaryFromFile = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
@@ -738,6 +946,7 @@ var getDictionaryTrie = /*#__PURE__*/function () {
  * @function solveBoggle
  * @param {string[][]} grid - 2D character grid representing the Boggle board
  * @returns {Promise<Set<string>>} A Promise that resolves to the set of all valid words found in the grid.
+ * @throws {TypeError} If grid is not a 2D array of strings.
  */
 var solveBoggle = /*#__PURE__*/function () {
   var _ref3 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3(grid) {
@@ -836,8 +1045,9 @@ __webpack_require__.r(__webpack_exports__);
  * Note: The function assumes that the input dice array contains exactly 16, 25, or 36 dice, each with 6 faces.
  *
  * @function generateRandomBoggleTray
- * @param {string[][]} dice - Array of 16, 25, or 36 dice, each die is an array of 6 letters
+ * @param {string[][]} dice - Array of 16, 25, or 36 dice, each die is an array of 6 letters#
  * @returns {string[][]} 4x4, 5x5, or 6x6 grid of letters representing the Boggle tray
+ * @throws {TypeError} If dice is not a 2D array of strings
  */
 var generateRandomBoggleTray = function generateRandomBoggleTray(dice) {
   var grid = [];
@@ -951,7 +1161,7 @@ var GRID_CELL_BUTTON_CLASSES = ["xs:text-2xl", "grid", "cursor-pointer", "place-
  *
  * @constant {string[]}
  */
-var GRID_CELL_CONTENT_CLASSES = ["grid", "aspect-square", "w-15", "place-items-center", "rounded-full", "bg-white"];
+var GRID_CELL_CONTENT_CLASSES = ["grid", "aspect-square", "w-15", "place-items-center", "rounded-full", "bg-white", "transition-colors", "duration-100", "ease-linear"];
 
 /**
  * Relative offsets for all eight adjacent directions

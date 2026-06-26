@@ -11,6 +11,7 @@
     --color-slate-700: oklch(37.2% 0.044 257.287);
     --color-slate-900: oklch(20.8% 0.042 265.755);
     --color-gray-300: oklch(87.2% 0.01 258.338);
+    --color-gray-500: oklch(55.1% 0.027 264.364);
     --color-black: #000;
     --color-white: #fff;
     --spacing: 0.25rem;
@@ -401,6 +402,9 @@
   .bg-gray-300 {
     background-color: var(--color-gray-300);
   }
+  .bg-gray-500 {
+    background-color: var(--color-gray-500);
+  }
   .bg-slate-200 {
     background-color: var(--color-slate-200);
   }
@@ -515,6 +519,19 @@
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
     transition-duration: var(--tw-duration, var(--default-transition-duration));
   }
+  .transition-colors {
+    transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
+    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+    transition-duration: var(--tw-duration, var(--default-transition-duration));
+  }
+  .duration-100 {
+    --tw-duration: 100ms;
+    transition-duration: 100ms;
+  }
+  .ease-linear {
+    --tw-ease: linear;
+    transition-timing-function: linear;
+  }
   .select-none {
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -609,12 +626,14 @@
     }
   }
 }
-@layer utilities {
-  input[type="number"]::-webkit-inner-spin-button,
-  input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-            appearance: none;
-  }
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+          appearance: none;
+}
+.selected-tile > span {
+  background-color: var(--color-gray-500);
+  color: var(--color-white);
 }
 @property --tw-rotate-x {
   syntax: "*";
@@ -793,6 +812,14 @@
   syntax: "*";
   inherits: false;
 }
+@property --tw-duration {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-ease {
+  syntax: "*";
+  inherits: false;
+}
 @layer properties {
   @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
     *, ::before, ::after, ::backdrop {
@@ -837,6 +864,8 @@
       --tw-drop-shadow-color: initial;
       --tw-drop-shadow-alpha: 100%;
       --tw-drop-shadow-size: initial;
+      --tw-duration: initial;
+      --tw-ease: initial;
     }
   }
 }
