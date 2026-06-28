@@ -46,6 +46,14 @@ const isAdjacent = (a, b) => {
   );
 };
 
+const emitSelectionChange = () => {
+  window.dispatchEvent(
+    new CustomEvent("boggle-selection-change", {
+      detail: [...selectionState.selectedPath],
+    }),
+  );
+};
+
 /**
  * Clears the entire current selection path and removes UI highlighting.
  *
@@ -57,6 +65,8 @@ const clearSelection = () => {
   });
 
   selectionState.selectedPath = [];
+
+  emitSelectionChange();
 };
 
 /**
@@ -78,7 +88,7 @@ const selectTile = (row, col) => {
 
   buttons[row][col].classList.add("selected-tile");
 
-  console.log(selectionState.selectedPath);
+  emitSelectionChange();
 };
 
 /**
@@ -92,7 +102,7 @@ const deselectTile = () => {
 
   if (last) buttons[last.row][last.col].classList.remove("selected-tile");
 
-  console.log(selectionState.selectedPath);
+  emitSelectionChange();
 };
 
 /**
