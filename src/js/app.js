@@ -4,10 +4,11 @@ import { setupSettingsControls } from "./components/settings.js";
 import { generateRandomBoggleTray } from "./components/trayGenerator.js";
 import { displayBoggleGrid } from "./components/gameBoard.js";
 import { solveBoggle } from "./components/solver.js";
+import { startTimer } from "./components/timer.js";
+
+let currentGameState = {};
 
 const startNewBoggleGame = async (gridSize, timeLimit) => {
-  console.log(`Grid Size: ${gridSize} | Time Limit: ${timeLimit}`);
-
   // Get the correct dice set based on the grid size, either standard, big, or super big
   const dice = DICE_SET_BY_GRID_SIZE[gridSize];
 
@@ -16,15 +17,42 @@ const startNewBoggleGame = async (gridSize, timeLimit) => {
   // Generate a new dice tray for the game using the determine dice set
   const tray = generateRandomBoggleTray(dice);
 
-  console.log(tray);
-
   // Display it onto the game board
   displayBoggleGrid(tray);
 
   // Generate all possible solutions from the generated tray
   const possibleSolutions = await solveBoggle(tray);
 
-  console.log(possibleSolutions);
+  startTimer(timeLimit);
+
+  // Update the game state object accordingly
+  currentGameState = {
+    gridSize,
+    timeLimit,
+    grid: tray,
+    solutions: possibleSolutions,
+    points: 0,
+    alreadyGuessed: new Set(),
+    currentSelection: "",
+  };
 };
 
+const handleSelectionChange = ({ detail: path }) => {
+  // Path is just an array of coordinates within the grid, so it needs to be converted into a string of letters
+  const currentSelectionString = path
+    .map((coordinate) => currentGameState.grid[coordinate.row][coordinate.col])
+    .join("");
+
+  currentGameState.currentSelection = currentSelectionString;
+
+  const isValidSolution = currentGameState.solutions.has(
+    currentGameState.currentSelection,
+  );
+
+  const solutionLength = currentGameState.currentSelection.length;
+};
+
+// Initial project setup
 setupSettingsControls(startNewBoggleGame);
+
+window.addEventListener("boggle-selection-change", handleSelectionChange);
