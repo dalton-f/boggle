@@ -14,7 +14,7 @@ An online version of the game Boggle, a word game in which players try to find a
 
 - **Mobile-Friendly Design**: Optimised for touch screens and smaller devices
 
-- **Accessibility Options**: Full keyboard navigation and high-contrast support
+- **Accessibility Options**: Full keyboard navigation for settings and gameplay
 
 ## Contributing
 
