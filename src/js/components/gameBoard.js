@@ -13,6 +13,7 @@ const selectionState = {
   isDragging: false,
   didDrag: false,
   selectedPath: [],
+  isAnimating: false,
 };
 
 /**
@@ -62,11 +63,28 @@ const emitSelectionChange = () => {
 const clearSelection = () => {
   selectionState.selectedPath.forEach(({ row, col }) => {
     buttons[row][col].classList.remove("selected-tile");
+    buttons[row][col].classList.remove("correct-tile");
   });
 
   selectionState.selectedPath = [];
 
   emitSelectionChange();
+};
+
+export const hightlightCorrectSelection = (path) => {
+  // Add an isAnimating guard to fix a race condition when forcing clear selection at the end of a drag
+  selectionState.isAnimating = true;
+
+  for (const coordinate of path) {
+    const { row, col } = coordinate;
+
+    buttons[row][col].classList.add("correct-tile");
+  }
+
+  setTimeout(() => {
+    clearSelection();
+    selectionState.isAnimating = false;
+  }, 300);
 };
 
 /**
@@ -78,6 +96,8 @@ const clearSelection = () => {
  * @throws {TypeError} If row or col is not an integer.
  */
 const selectTile = (row, col) => {
+  if (selectionState.isAnimating) return;
+
   if (!Number.isInteger(row))
     throw new TypeError(`Expected row to be an integer, received: ${row}`);
 
@@ -310,5 +330,5 @@ window.addEventListener("pointerup", () => {
   selectionState.isDragging = false;
 
   // Fully clear only if a drag has been stopped
-  if (selectionState.didDrag) clearSelection();
+  if (selectionState.didDrag && !selectionState.isAnimating) clearSelection();
 });
