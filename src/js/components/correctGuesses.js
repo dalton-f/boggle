@@ -93,3 +93,11 @@ export const updateCorrectGuessesUI = (guess) => {
 
   parent.appendChild(element);
 };
+
+export const clearCorrectGuessesUI = () => {
+  threeLetterCorrectGuessesRow.innerHTML = "";
+  fourLetterCorrectGuessesRow.innerHTML = "";
+  fiveLetterCorrectGuessesRow.innerHTML = "";
+  sixLetterCorrectGuessesRow.innerHTML = "";
+  sevenLetterCorrectGuessesRow.innerHTML = "";
+};

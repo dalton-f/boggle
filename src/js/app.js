@@ -13,7 +13,10 @@ import { solveBoggle } from "./components/solver.js";
 
 import { startTimer } from "./components/timer.js";
 
-import { updateCorrectGuessesUI } from "./components/correctGuesses.js";
+import {
+  updateCorrectGuessesUI,
+  clearCorrectGuessesUI,
+} from "./components/correctGuesses.js";
 
 import { getPointsForWord, updatePointsUI } from "./components/scoring.js";
 
@@ -49,6 +52,7 @@ const startNewBoggleGame = async (gridSize, timeLimit) => {
 
   // Reset UI elements
   updatePointsUI(currentGameState.points);
+  clearCorrectGuessesUI();
 };
 
 const handleSelectionChange = (event) => {

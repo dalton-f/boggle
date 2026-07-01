@@ -489,6 +489,7 @@ var startNewBoggleGame = /*#__PURE__*/function () {
 
           // Reset UI elements
           (0,_components_scoring_js__WEBPACK_IMPORTED_MODULE_7__.updatePointsUI)(currentGameState.points);
+          (0,_components_correctGuesses_js__WEBPACK_IMPORTED_MODULE_6__.clearCorrectGuessesUI)();
         case 3:
           return _context.a(2);
       }
@@ -539,6 +540,7 @@ window.addEventListener("boggle-selection-change", handleSelectionChange);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   clearCorrectGuessesUI: () => (/* binding */ clearCorrectGuessesUI),
 /* harmony export */   updateCorrectGuessesUI: () => (/* binding */ updateCorrectGuessesUI)
 /* harmony export */ });
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
@@ -603,6 +605,13 @@ var updateCorrectGuessesUI = function updateCorrectGuessesUI(guess) {
   var parent = correctGuessRowByLength[length];
   var element = buildWordElement(guess);
   parent.appendChild(element);
+};
+var clearCorrectGuessesUI = function clearCorrectGuessesUI() {
+  threeLetterCorrectGuessesRow.innerHTML = "";
+  fourLetterCorrectGuessesRow.innerHTML = "";
+  fiveLetterCorrectGuessesRow.innerHTML = "";
+  sixLetterCorrectGuessesRow.innerHTML = "";
+  sevenLetterCorrectGuessesRow.innerHTML = "";
 };
 
 /***/ }),
