@@ -27,6 +27,7 @@
         <!-- Game Board -->
         <div
           class="xs:p-4 flex h-full flex-col gap-10 rounded-lg bg-slate-200 p-2 md:rounded-3xl md:p-8 lg:gap-0"
+          id="gameBoardParent"
         >
           <div
             class="flex items-center justify-between text-lg font-bold md:text-3xl"
@@ -212,7 +213,7 @@
       <div class="grid gap-4">
         <!-- Correct Guesses -->
         <div
-          class="xs:p-4 divide-y divide-black/20 rounded-lg bg-slate-200 p-2 font-bold md:rounded-3xl md:p-8"
+          class="xs:p-4 min-w-0 divide-y divide-black/20 rounded-lg bg-slate-200 p-2 font-bold md:rounded-3xl md:p-8"
         >
           <p class="pb-2 text-lg md:text-xl">Correct Guesses</p>
 
@@ -221,7 +222,7 @@
             <p class="text-lg">3 letters:</p>
 
             <div
-              class="flex min-h-[26px] scrollbar-none items-center gap-2 overflow-x-scroll"
+              class="flex min-h-[26px] scrollbar-none items-center gap-2 overflow-x-auto scroll-smooth"
               id="threeLetterCorrectGuessesRow"
             ></div>
           </div>
@@ -231,7 +232,7 @@
             <p class="text-lg">4 letters:</p>
 
             <div
-              class="flex min-h-[26px] scrollbar-none items-center gap-2 overflow-x-scroll"
+              class="flex min-h-[26px] scrollbar-none items-center gap-2 overflow-x-auto scroll-smooth"
               id="fourLetterCorrectGuessesRow"
             ></div>
           </div>
@@ -241,7 +242,7 @@
             <p class="text-lg">5 letters:</p>
 
             <div
-              class="flex min-h-[26px] scrollbar-none items-center gap-2 overflow-x-scroll"
+              class="flex min-h-[26px] scrollbar-none items-center gap-2 overflow-x-auto scroll-smooth"
               id="fiveLetterCorrectGuessesRow"
             ></div>
           </div>
@@ -251,7 +252,7 @@
             <p class="text-lg">6 letters:</p>
 
             <div
-              class="flex min-h-[26px] scrollbar-none items-center gap-2 overflow-x-scroll"
+              class="flex min-h-[26px] scrollbar-none items-center gap-2 overflow-x-auto scroll-smooth"
               id="sixLetterCorrectGuessesRow"
             ></div>
           </div>
@@ -261,7 +262,7 @@
             <p class="text-lg">7+ letters:</p>
 
             <div
-              class="flex min-h-[26px] scrollbar-none items-center gap-2 overflow-x-scroll"
+              class="flex min-h-[26px] scrollbar-none items-center gap-2 overflow-x-auto scroll-smooth"
               id="sevenLetterCorrectGuessesRow"
             ></div>
           </div>
