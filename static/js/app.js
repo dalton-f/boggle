@@ -1286,6 +1286,7 @@ __webpack_require__.r(__webpack_exports__);
 /* eslint-disable no-magic-numbers */
 
 var timerElement = document.getElementById("timerElement");
+var gameTray = document.getElementById("gameTray");
 var countdownTimer;
 var remainingSeconds = 0;
 
@@ -1301,6 +1302,7 @@ var remainingSeconds = 0;
  */
 var startTimer = function startTimer(minutes) {
   if (minutes < 0) throw new TypeError("Minutes must be a positive number.");
+  gameTray.classList.remove("opacity-50", "pointer-events-none");
 
   // Clear any previous timer
   clearInterval(countdownTimer);
@@ -1318,6 +1320,8 @@ var startTimer = function startTimer(minutes) {
       remainingSeconds = 0;
       updateTimerDisplay();
       clearInterval(countdownTimer);
+      timerElement.textContent = "Time's up!";
+      gameTray.classList.add("opacity-50", "pointer-events-none");
       return;
     }
 

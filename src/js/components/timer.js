@@ -1,6 +1,7 @@
 /* eslint-disable no-magic-numbers */
 
 const timerElement = document.getElementById("timerElement");
+const gameTray = document.getElementById("gameTray");
 
 let countdownTimer;
 let remainingSeconds = 0;
@@ -17,6 +18,8 @@ let remainingSeconds = 0;
  */
 export const startTimer = (minutes) => {
   if (minutes < 0) throw new TypeError("Minutes must be a positive number.");
+
+  gameTray.classList.remove("opacity-50", "pointer-events-none");
 
   // Clear any previous timer
   clearInterval(countdownTimer);
@@ -37,6 +40,9 @@ export const startTimer = (minutes) => {
       updateTimerDisplay();
 
       clearInterval(countdownTimer);
+
+      timerElement.textContent = "Time's up!";
+      gameTray.classList.add("opacity-50", "pointer-events-none");
 
       return;
     }
