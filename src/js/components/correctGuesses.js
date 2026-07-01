@@ -35,10 +35,27 @@ const correctGuessRowByLength = {
 /**
  * Builds a DOM element representing a correctly guessed word.
  *
- * @param {string} word - The word to display
+ * @param {string} word - The word to display. Must be a non-empty string
+ * consisting of letters only (after trimming).
+ *
+ * @throws {TypeError} If `word` is not a string
+ * @throws {Error} If `word` is empty after trimming
+ *
  * @returns {HTMLDivElement} The styled word element
  */
 const buildWordElement = (word) => {
+  if (typeof word !== "string") {
+    throw new TypeError(
+      `buildWordElement expected a string, got ${typeof word}`,
+    );
+  }
+
+  const trimmed = word.trim();
+
+  if (!trimmed) {
+    throw new Error("buildWordElement received an empty word");
+  }
+
   const div = document.createElement("div");
 
   div.classList.add(
@@ -51,7 +68,7 @@ const buildWordElement = (word) => {
     "uppercase",
   );
 
-  div.innerText = word;
+  div.innerText = trimmed;
 
   return div;
 };

@@ -337,9 +337,6 @@
   .scrollbar-none {
     scrollbar-width: none;
   }
-  .scrollbar-thin {
-    scrollbar-width: thin;
-  }
   .appearance-none {
     -webkit-appearance: none;
        -moz-appearance: none;
@@ -676,6 +673,11 @@
   .lg\:gap-0 {
     @media (width >= 64rem) {
       gap: calc(var(--spacing) * 0);
+    }
+  }
+  .lg\:gap-4 {
+    @media (width >= 64rem) {
+      gap: calc(var(--spacing) * 4);
     }
   }
 }

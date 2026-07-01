@@ -7,6 +7,8 @@ import {
   GRID_COLUMN_CLASSES,
 } from "../utilities/constants.js";
 
+const gameBoardParent = document.getElementById("gameBoardParent");
+
 const buttons = [];
 
 const selectionState = {
@@ -349,6 +351,13 @@ export const displayBoggleGrid = (grid) => {
 
   // Append the built fragment to the grid
   gridContainer.appendChild(fragment);
+
+  gameBoardParent.classList.remove("lg:gap-4");
+
+  // Add slightly more spacing between the biggest grid + the timer etc on biggest window sizes
+  if (window.innerWidth >= 1024 && grid.length === 6) {
+    gameBoardParent.classList.add("lg:gap-4");
+  }
 };
 
 // Stop dragging

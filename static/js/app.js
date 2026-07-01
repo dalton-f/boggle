@@ -541,6 +541,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   updateCorrectGuessesUI: () => (/* binding */ updateCorrectGuessesUI)
 /* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 var threeLetterCorrectGuessesRow = document.getElementById("threeLetterCorrectGuessesRow");
 var fourLetterCorrectGuessesRow = document.getElementById("fourLetterCorrectGuessesRow");
 var fiveLetterCorrectGuessesRow = document.getElementById("fiveLetterCorrectGuessesRow");
@@ -564,13 +565,25 @@ var correctGuessRowByLength = {
 /**
  * Builds a DOM element representing a correctly guessed word.
  *
- * @param {string} word - The word to display
+ * @param {string} word - The word to display. Must be a non-empty string
+ * consisting of letters only (after trimming).
+ *
+ * @throws {TypeError} If `word` is not a string
+ * @throws {Error} If `word` is empty after trimming
+ *
  * @returns {HTMLDivElement} The styled word element
  */
 var buildWordElement = function buildWordElement(word) {
+  if (typeof word !== "string") {
+    throw new TypeError("buildWordElement expected a string, got ".concat(_typeof(word)));
+  }
+  var trimmed = word.trim();
+  if (!trimmed) {
+    throw new Error("buildWordElement received an empty word");
+  }
   var div = document.createElement("div");
   div.classList.add("rounded-3xl", "border", "border-green-700", "bg-white", "px-3", "text-green-700", "uppercase");
-  div.innerText = word;
+  div.innerText = trimmed;
   return div;
 };
 
@@ -617,6 +630,7 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 /* eslint-disable no-magic-numbers */
 
 
+var gameBoardParent = document.getElementById("gameBoardParent");
 var buttons = [];
 var selectionState = {
   isDragging: false,
@@ -915,6 +929,12 @@ var displayBoggleGrid = function displayBoggleGrid(grid) {
 
   // Append the built fragment to the grid
   gridContainer.appendChild(fragment);
+  gameBoardParent.classList.remove("lg:gap-4");
+
+  // Add slightly more spacing between the biggest grid + the timer etc on biggest window sizes
+  if (window.innerWidth >= 1024 && grid.length === 6) {
+    gameBoardParent.classList.add("lg:gap-4");
+  }
 };
 
 // Stop dragging
@@ -1048,7 +1068,12 @@ var setupSettingsControls = function setupSettingsControls(startNewBoggleGame) {
 
   // Makes sure both the time limit and grid size selectors are working correctly
   // by attaching all the correct event listeners
-  setupSelectorControls(gridSizeDecreaseButton, gridSizeIncreaseButton, gridSizeSelector);
+
+  // Only allow changing the grid size on wider windows tha allow it
+  // TODO: Possibly add disabled styles to make this more clear
+  if (window.innerWidth >= 768) {
+    setupSelectorControls(gridSizeDecreaseButton, gridSizeIncreaseButton, gridSizeSelector);
+  }
   setupSelectorControls(timeLimitDecreaseButton, timeLimitIncreaseButton, timeLimitSelector);
 
   // Connect the actual settings form submit button to starting a new boggle game with the corresponding settings

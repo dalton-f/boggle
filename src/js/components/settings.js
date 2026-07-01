@@ -80,11 +80,16 @@ export const setupSettingsControls = (startNewBoggleGame) => {
 
   // Makes sure both the time limit and grid size selectors are working correctly
   // by attaching all the correct event listeners
-  setupSelectorControls(
-    gridSizeDecreaseButton,
-    gridSizeIncreaseButton,
-    gridSizeSelector,
-  );
+
+  // Only allow changing the grid size on wider windows tha allow it
+  // TODO: Possibly add disabled styles to make this more clear
+  if (window.innerWidth >= 768) {
+    setupSelectorControls(
+      gridSizeDecreaseButton,
+      gridSizeIncreaseButton,
+      gridSizeSelector,
+    );
+  }
 
   setupSelectorControls(
     timeLimitDecreaseButton,
