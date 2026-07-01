@@ -2,15 +2,36 @@
 
 @theme {
   --breakpoint-xs: 23.4375rem;
+
+  --animate-correct-flash: correctFlash 300ms ease;
+
+  @keyframes correctFlash {
+    0% {
+      background: #4caf50;
+      transform: scale(1);
+    }
+
+    50% {
+      background: #81c784;
+      transform: scale(1.15);
+    }
+
+    100% {
+      background: #4caf50;
+      transform: scale(1);
+    }
+  }
 }
 
-/* Remove spinners from input type number */
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-  @apply appearance-none;
-}
+@layer base {
+  /* Remove spinners from input type number */
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    appearance: none;
+  }
 
-/* Custom selection utility to handle nested HTML elements */
-.selected-tile > span {
-  @apply bg-gray-500 text-white;
+  /* Remove spinners from Firefox */
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
 }
