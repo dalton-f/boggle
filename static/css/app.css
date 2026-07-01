@@ -7,6 +7,7 @@
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
+    --color-green-700: oklch(52.7% 0.154 150.069);
     --color-slate-200: oklch(92.9% 0.013 255.508);
     --color-slate-700: oklch(37.2% 0.044 257.287);
     --color-slate-900: oklch(20.8% 0.042 265.755);
@@ -309,6 +310,9 @@
   .max-w-xl {
     max-width: var(--container-xl);
   }
+  .min-w-0 {
+    min-width: calc(var(--spacing) * 0);
+  }
   .shrink {
     flex-shrink: 1;
   }
@@ -332,6 +336,9 @@
   }
   .scrollbar-none {
     scrollbar-width: none;
+  }
+  .scrollbar-thin {
+    scrollbar-width: thin;
   }
   .appearance-none {
     -webkit-appearance: none;
@@ -387,11 +394,17 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-  .overflow-x-scroll {
-    overflow-x: scroll;
+  .overflow-x-auto {
+    overflow-x: auto;
+  }
+  .scroll-smooth {
+    scroll-behavior: smooth;
   }
   .rounded {
     border-radius: 0.25rem;
+  }
+  .rounded-3xl {
+    border-radius: var(--radius-3xl);
   }
   .rounded-full {
     border-radius: calc(infinity * 1px);
@@ -408,6 +421,9 @@
     @supports (color: color-mix(in lab, red, red)) {
       border-color: color-mix(in oklab, var(--color-black) 20%, transparent);
     }
+  }
+  .border-green-700 {
+    border-color: var(--color-green-700);
   }
   .bg-gray-300 {
     background-color: var(--color-gray-300);
@@ -436,6 +452,9 @@
   .px-2 {
     padding-inline: calc(var(--spacing) * 2);
   }
+  .px-3 {
+    padding-inline: calc(var(--spacing) * 3);
+  }
   .py-2 {
     padding-block: calc(var(--spacing) * 2);
   }
@@ -463,6 +482,9 @@
   .font-bold {
     --tw-font-weight: var(--font-weight-bold);
     font-weight: var(--font-weight-bold);
+  }
+  .text-green-700 {
+    color: var(--color-green-700);
   }
   .text-white {
     color: var(--color-white);
@@ -655,16 +677,6 @@
     @media (width >= 64rem) {
       gap: calc(var(--spacing) * 0);
     }
-  }
-}
-@layer base {
-  input[type="number"]::-webkit-inner-spin-button,
-  input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-            appearance: none;
-  }
-  input[type="number"] {
-    -moz-appearance: textfield;
   }
 }
 @property --tw-scale-x {

@@ -13,6 +13,8 @@ import { solveBoggle } from "./components/solver.js";
 
 import { startTimer } from "./components/timer.js";
 
+import { updateCorrectGuessesUI } from "./components/correctGuesses.js";
+
 import { getPointsForWord, updatePointsUI } from "./components/scoring.js";
 
 let currentGameState = {};
@@ -45,8 +47,6 @@ const startNewBoggleGame = async (gridSize, timeLimit) => {
     currentSelection: "",
   };
 
-  console.log(currentGameState);
-
   // Reset UI elements
   updatePointsUI(currentGameState.points);
 };
@@ -74,6 +74,9 @@ const handleSelectionChange = (event) => {
 
   // Update previous guesses set
   currentGameState.alreadyGuessed.add(currentGameState.currentSelection);
+
+  // Update UI for correct guesses
+  updateCorrectGuessesUI(currentGameState.currentSelection);
 
   hightlightCorrectSelection(path);
 

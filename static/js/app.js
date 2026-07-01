@@ -436,11 +436,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_gameBoard_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/gameBoard.js */ "./src/js/components/gameBoard.js");
 /* harmony import */ var _components_solver_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/solver.js */ "./src/js/components/solver.js");
 /* harmony import */ var _components_timer_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/timer.js */ "./src/js/components/timer.js");
-/* harmony import */ var _components_scoring_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/scoring.js */ "./src/js/components/scoring.js");
+/* harmony import */ var _components_correctGuesses_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/correctGuesses.js */ "./src/js/components/correctGuesses.js");
+/* harmony import */ var _components_scoring_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/scoring.js */ "./src/js/components/scoring.js");
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+
 
 
 
@@ -484,10 +486,9 @@ var startNewBoggleGame = /*#__PURE__*/function () {
             alreadyGuessed: new Set(),
             currentSelection: ""
           };
-          console.log(currentGameState);
 
           // Reset UI elements
-          (0,_components_scoring_js__WEBPACK_IMPORTED_MODULE_6__.updatePointsUI)(currentGameState.points);
+          (0,_components_scoring_js__WEBPACK_IMPORTED_MODULE_7__.updatePointsUI)(currentGameState.points);
         case 3:
           return _context.a(2);
       }
@@ -512,17 +513,84 @@ var handleSelectionChange = function handleSelectionChange(event) {
 
   // Update previous guesses set
   currentGameState.alreadyGuessed.add(currentGameState.currentSelection);
+
+  // Update UI for correct guesses
+  (0,_components_correctGuesses_js__WEBPACK_IMPORTED_MODULE_6__.updateCorrectGuessesUI)(currentGameState.currentSelection);
   (0,_components_gameBoard_js__WEBPACK_IMPORTED_MODULE_3__.hightlightCorrectSelection)(path);
   var solutionLength = currentGameState.currentSelection.length;
 
   // Update points internally and on the UI
-  currentGameState.points += (0,_components_scoring_js__WEBPACK_IMPORTED_MODULE_6__.getPointsForWord)(solutionLength);
-  (0,_components_scoring_js__WEBPACK_IMPORTED_MODULE_6__.updatePointsUI)(currentGameState.points);
+  currentGameState.points += (0,_components_scoring_js__WEBPACK_IMPORTED_MODULE_7__.getPointsForWord)(solutionLength);
+  (0,_components_scoring_js__WEBPACK_IMPORTED_MODULE_7__.updatePointsUI)(currentGameState.points);
 };
 
 // Initial project setup
 (0,_components_settings_js__WEBPACK_IMPORTED_MODULE_1__.setupSettingsControls)(startNewBoggleGame);
 window.addEventListener("boggle-selection-change", handleSelectionChange);
+
+/***/ }),
+
+/***/ "./src/js/components/correctGuesses.js":
+/*!*********************************************!*\
+  !*** ./src/js/components/correctGuesses.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   updateCorrectGuessesUI: () => (/* binding */ updateCorrectGuessesUI)
+/* harmony export */ });
+var threeLetterCorrectGuessesRow = document.getElementById("threeLetterCorrectGuessesRow");
+var fourLetterCorrectGuessesRow = document.getElementById("fourLetterCorrectGuessesRow");
+var fiveLetterCorrectGuessesRow = document.getElementById("fiveLetterCorrectGuessesRow");
+var sixLetterCorrectGuessesRow = document.getElementById("sixLetterCorrectGuessesRow");
+var sevenLetterCorrectGuessesRow = document.getElementById("sevenLetterCorrectGuessesRow");
+
+/**
+ * Row elements for correct guesses grouped by word length.
+ * Keys represent word lengths (3–7), where 7 includes 7+ letter words.
+ *
+ * @type {Record<number, HTMLElement | null>}
+ */
+var correctGuessRowByLength = {
+  3: threeLetterCorrectGuessesRow,
+  4: fourLetterCorrectGuessesRow,
+  5: fiveLetterCorrectGuessesRow,
+  6: sixLetterCorrectGuessesRow,
+  7: sevenLetterCorrectGuessesRow
+};
+
+/**
+ * Builds a DOM element representing a correctly guessed word.
+ *
+ * @param {string} word - The word to display
+ * @returns {HTMLDivElement} The styled word element
+ */
+var buildWordElement = function buildWordElement(word) {
+  var div = document.createElement("div");
+  div.classList.add("rounded-3xl", "border", "border-green-700", "bg-white", "px-3", "text-green-700", "uppercase");
+  div.innerText = word;
+  return div;
+};
+
+/**
+ * Creates a UI element representing a guessed word and appends it
+ * to the correct row based on word length.
+ *
+ * Words with length >= 7 are grouped into the 7-letter row.
+ *
+ * @param {string} guess - The correctly guessed word
+ * @returns {void}
+ */
+var updateCorrectGuessesUI = function updateCorrectGuessesUI(guess) {
+  // Clamp 7+ to 7 as the all go into the same row anyway
+  // eslint-disable-next-line no-magic-numbers
+  var length = guess.length >= 7 ? 7 : guess.length;
+  var parent = correctGuessRowByLength[length];
+  var element = buildWordElement(guess);
+  parent.appendChild(element);
+};
 
 /***/ }),
 
