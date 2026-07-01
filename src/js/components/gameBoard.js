@@ -47,6 +47,17 @@ const isAdjacent = (a, b) => {
   );
 };
 
+/**
+ * Dispatches a global `boggle-selection-change` custom event whenever the
+ * current Boggle selection path changes.
+ *
+ * The event's `detail` contains a shallow copy of the current selected path,
+ * allowing listeners to safely read the selection without mutating the
+ * original state.
+ *
+ * @fires CustomEvent#boggle-selection-change
+ * @returns {void}
+ */
 const emitSelectionChange = () => {
   window.dispatchEvent(
     new CustomEvent("boggle-selection-change", {
@@ -62,8 +73,8 @@ const emitSelectionChange = () => {
  */
 const clearSelection = () => {
   selectionState.selectedPath.forEach(({ row, col }) => {
-    buttons[row][col].querySelector("span").removeAttribute("data-correct");
-    buttons[row][col].querySelector("span").removeAttribute("data-selected");
+    buttons[row][col].firstElementChild?.removeAttribute("data-correct");
+    buttons[row][col].firstElementChild?.removeAttribute("data-selected");
   });
 
   selectionState.selectedPath = [];
@@ -71,6 +82,18 @@ const clearSelection = () => {
   emitSelectionChange();
 };
 
+/**
+ * Visually highlights the selected path as correct, then clears the selection
+ * after a short animation delay.
+ *
+ * While the animation is running, selection updates are temporarily blocked
+ * via `selectionState.isAnimating` to prevent race conditions (such as a forced
+ * selection clear at the end of a drag gesture).
+ *
+ * @param {Array<{row: number, col: number}>} path - The sequence of grid
+ * coordinates to highlight.
+ * @returns {void}
+ */
 export const hightlightCorrectSelection = (path) => {
   // Add an isAnimating guard to fix a race condition when forcing clear selection at the end of a drag
   selectionState.isAnimating = true;
@@ -78,7 +101,7 @@ export const hightlightCorrectSelection = (path) => {
   for (const coordinate of path) {
     const { row, col } = coordinate;
 
-    buttons[row][col].querySelector("span").setAttribute("data-correct", "");
+    buttons[row][col].firstElementChild?.setAttribute("data-correct", "");
   }
 
   setTimeout(() => {
@@ -106,7 +129,7 @@ const selectTile = (row, col) => {
 
   selectionState.selectedPath.push({ row, col });
 
-  buttons[row][col].querySelector("span").setAttribute("data-selected", "");
+  buttons[row][col].firstElementChild?.setAttribute("data-selected", "");
 
   emitSelectionChange();
 };
@@ -121,9 +144,9 @@ const deselectTile = () => {
   const last = selectionState.selectedPath.pop();
 
   if (last)
-    buttons[last.row][last.col]
-      .querySelector("span")
-      .removeAttribute("data-selected");
+    buttons[last.row][last.col].firstElementChild?.removeAttribute(
+      "data-selected",
+    );
 
   emitSelectionChange();
 };
