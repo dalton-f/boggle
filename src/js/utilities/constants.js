@@ -160,6 +160,9 @@ export const GRID_CELL_CONTENT_CLASSES = [
   "transition-colors",
   "duration-100",
   "ease-linear",
+  "data-selected:bg-gray-500",
+  "data-selected:text-white",
+  "data-correct:animate-correct-flash",
 ];
 
 /**

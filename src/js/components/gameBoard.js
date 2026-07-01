@@ -62,8 +62,8 @@ const emitSelectionChange = () => {
  */
 const clearSelection = () => {
   selectionState.selectedPath.forEach(({ row, col }) => {
-    buttons[row][col].classList.remove("selected-tile");
-    buttons[row][col].classList.remove("correct-tile");
+    buttons[row][col].querySelector("span").removeAttribute("data-correct");
+    buttons[row][col].querySelector("span").removeAttribute("data-selected");
   });
 
   selectionState.selectedPath = [];
@@ -78,7 +78,7 @@ export const hightlightCorrectSelection = (path) => {
   for (const coordinate of path) {
     const { row, col } = coordinate;
 
-    buttons[row][col].classList.add("correct-tile");
+    buttons[row][col].querySelector("span").setAttribute("data-correct", "");
   }
 
   setTimeout(() => {
@@ -106,7 +106,7 @@ const selectTile = (row, col) => {
 
   selectionState.selectedPath.push({ row, col });
 
-  buttons[row][col].classList.add("selected-tile");
+  buttons[row][col].querySelector("span").setAttribute("data-selected", "");
 
   emitSelectionChange();
 };
@@ -120,7 +120,10 @@ const selectTile = (row, col) => {
 const deselectTile = () => {
   const last = selectionState.selectedPath.pop();
 
-  if (last) buttons[last.row][last.col].classList.remove("selected-tile");
+  if (last)
+    buttons[last.row][last.col]
+      .querySelector("span")
+      .removeAttribute("data-selected");
 
   emitSelectionChange();
 };
