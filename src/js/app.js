@@ -1,10 +1,19 @@
 import { DICE_SET_BY_GRID_SIZE } from "./utilities/constants.js";
 
 import { setupSettingsControls } from "./components/settings.js";
+
 import { generateRandomBoggleTray } from "./components/trayGenerator.js";
-import { displayBoggleGrid } from "./components/gameBoard.js";
+
+import {
+  displayBoggleGrid,
+  hightlightCorrectSelection,
+} from "./components/gameBoard.js";
+
 import { solveBoggle } from "./components/solver.js";
+
 import { startTimer } from "./components/timer.js";
+
+import { getPointsForWord, updatePointsUI } from "./components/scoring.js";
 
 let currentGameState = {};
 
@@ -35,9 +44,16 @@ const startNewBoggleGame = async (gridSize, timeLimit) => {
     alreadyGuessed: new Set(),
     currentSelection: "",
   };
+
+  console.log(currentGameState);
+
+  // Reset UI elements
+  updatePointsUI(currentGameState.points);
 };
 
-const handleSelectionChange = ({ detail: path }) => {
+const handleSelectionChange = (event) => {
+  const { detail: path } = event;
+
   // Path is just an array of coordinates within the grid, so it needs to be converted into a string of letters
   const currentSelectionString = path
     .map((coordinate) => currentGameState.grid[coordinate.row][coordinate.col])
@@ -49,7 +65,23 @@ const handleSelectionChange = ({ detail: path }) => {
     currentGameState.currentSelection,
   );
 
+  // If not a valid guess, or has been previously guessed, return early
+  if (
+    !isValidSolution ||
+    currentGameState.alreadyGuessed.has(currentGameState.currentSelection)
+  )
+    return;
+
+  // Update previous guesses set
+  currentGameState.alreadyGuessed.add(currentGameState.currentSelection);
+
+  hightlightCorrectSelection(path);
+
   const solutionLength = currentGameState.currentSelection.length;
+
+  // Update points internally and on the UI
+  currentGameState.points += getPointsForWord(solutionLength);
+  updatePointsUI(currentGameState.points);
 };
 
 // Initial project setup

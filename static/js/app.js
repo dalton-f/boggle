@@ -436,10 +436,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_gameBoard_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/gameBoard.js */ "./src/js/components/gameBoard.js");
 /* harmony import */ var _components_solver_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/solver.js */ "./src/js/components/solver.js");
 /* harmony import */ var _components_timer_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/timer.js */ "./src/js/components/timer.js");
+/* harmony import */ var _components_scoring_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/scoring.js */ "./src/js/components/scoring.js");
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+
 
 
 
@@ -482,6 +484,10 @@ var startNewBoggleGame = /*#__PURE__*/function () {
             alreadyGuessed: new Set(),
             currentSelection: ""
           };
+          console.log(currentGameState);
+
+          // Reset UI elements
+          (0,_components_scoring_js__WEBPACK_IMPORTED_MODULE_6__.updatePointsUI)(currentGameState.points);
         case 3:
           return _context.a(2);
       }
@@ -491,14 +497,27 @@ var startNewBoggleGame = /*#__PURE__*/function () {
     return _ref.apply(this, arguments);
   };
 }();
-var handleSelectionChange = function handleSelectionChange(_ref2) {
-  var path = _ref2.detail;
+var handleSelectionChange = function handleSelectionChange(event) {
+  var path = event.detail;
+
   // Path is just an array of coordinates within the grid, so it needs to be converted into a string of letters
   var currentSelectionString = path.map(function (coordinate) {
     return currentGameState.grid[coordinate.row][coordinate.col];
   }).join("");
   currentGameState.currentSelection = currentSelectionString;
-  console.log("Current selection string: ".concat(currentGameState.currentSelection, ", Is a valid solution: ").concat(currentGameState.solutions.has(currentGameState.currentSelection)));
+  var isValidSolution = currentGameState.solutions.has(currentGameState.currentSelection);
+
+  // If not a valid guess, or has been previously guessed, return early
+  if (!isValidSolution || currentGameState.alreadyGuessed.has(currentGameState.currentSelection)) return;
+
+  // Update previous guesses set
+  currentGameState.alreadyGuessed.add(currentGameState.currentSelection);
+  (0,_components_gameBoard_js__WEBPACK_IMPORTED_MODULE_3__.hightlightCorrectSelection)(path);
+  var solutionLength = currentGameState.currentSelection.length;
+
+  // Update points internally and on the UI
+  currentGameState.points += (0,_components_scoring_js__WEBPACK_IMPORTED_MODULE_6__.getPointsForWord)(solutionLength);
+  (0,_components_scoring_js__WEBPACK_IMPORTED_MODULE_6__.updatePointsUI)(currentGameState.points);
 };
 
 // Initial project setup
@@ -516,9 +535,11 @@ window.addEventListener("boggle-selection-change", handleSelectionChange);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   displayBoggleGrid: () => (/* binding */ displayBoggleGrid)
+/* harmony export */   displayBoggleGrid: () => (/* binding */ displayBoggleGrid),
+/* harmony export */   hightlightCorrectSelection: () => (/* binding */ hightlightCorrectSelection)
 /* harmony export */ });
 /* harmony import */ var _utilities_constants_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utilities/constants.js */ "./src/js/utilities/constants.js");
+function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -532,7 +553,8 @@ var buttons = [];
 var selectionState = {
   isDragging: false,
   didDrag: false,
-  selectedPath: []
+  selectedPath: [],
+  isAnimating: false
 };
 
 /**
@@ -554,6 +576,18 @@ var isAdjacent = function isAdjacent(a, b) {
   var sameTile = a.row === b.row && a.col === b.col;
   return Math.abs(a.row - b.row) <= 1 && Math.abs(a.col - b.col) <= 1 && !sameTile;
 };
+
+/**
+ * Dispatches a global `boggle-selection-change` custom event whenever the
+ * current Boggle selection path changes.
+ *
+ * The event's `detail` contains a shallow copy of the current selected path,
+ * allowing listeners to safely read the selection without mutating the
+ * original state.
+ *
+ * @fires CustomEvent#boggle-selection-change
+ * @returns {void}
+ */
 var emitSelectionChange = function emitSelectionChange() {
   window.dispatchEvent(new CustomEvent("boggle-selection-change", {
     detail: _toConsumableArray(selectionState.selectedPath)
@@ -567,12 +601,50 @@ var emitSelectionChange = function emitSelectionChange() {
  */
 var clearSelection = function clearSelection() {
   selectionState.selectedPath.forEach(function (_ref) {
+    var _buttons$row$col$firs, _buttons$row$col$firs2;
     var row = _ref.row,
       col = _ref.col;
-    buttons[row][col].classList.remove("selected-tile");
+    (_buttons$row$col$firs = buttons[row][col].firstElementChild) === null || _buttons$row$col$firs === void 0 || _buttons$row$col$firs.removeAttribute("data-correct");
+    (_buttons$row$col$firs2 = buttons[row][col].firstElementChild) === null || _buttons$row$col$firs2 === void 0 || _buttons$row$col$firs2.removeAttribute("data-selected");
   });
   selectionState.selectedPath = [];
   emitSelectionChange();
+};
+
+/**
+ * Visually highlights the selected path as correct, then clears the selection
+ * after a short animation delay.
+ *
+ * While the animation is running, selection updates are temporarily blocked
+ * via `selectionState.isAnimating` to prevent race conditions (such as a forced
+ * selection clear at the end of a drag gesture).
+ *
+ * @param {Array<{row: number, col: number}>} path - The sequence of grid
+ * coordinates to highlight.
+ * @returns {void}
+ */
+var hightlightCorrectSelection = function hightlightCorrectSelection(path) {
+  // Add an isAnimating guard to fix a race condition when forcing clear selection at the end of a drag
+  selectionState.isAnimating = true;
+  var _iterator = _createForOfIteratorHelper(path),
+    _step;
+  try {
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var _buttons$row$col$firs3;
+      var coordinate = _step.value;
+      var row = coordinate.row,
+        col = coordinate.col;
+      (_buttons$row$col$firs3 = buttons[row][col].firstElementChild) === null || _buttons$row$col$firs3 === void 0 || _buttons$row$col$firs3.setAttribute("data-correct", "");
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+  setTimeout(function () {
+    clearSelection();
+    selectionState.isAnimating = false;
+  }, 300);
 };
 
 /**
@@ -584,13 +656,15 @@ var clearSelection = function clearSelection() {
  * @throws {TypeError} If row or col is not an integer.
  */
 var selectTile = function selectTile(row, col) {
+  var _buttons$row$col$firs4;
+  if (selectionState.isAnimating) return;
   if (!Number.isInteger(row)) throw new TypeError("Expected row to be an integer, received: ".concat(row));
   if (!Number.isInteger(col)) throw new TypeError("Expected col to be an integer, received: ".concat(col));
   selectionState.selectedPath.push({
     row: row,
     col: col
   });
-  buttons[row][col].classList.add("selected-tile");
+  (_buttons$row$col$firs4 = buttons[row][col].firstElementChild) === null || _buttons$row$col$firs4 === void 0 || _buttons$row$col$firs4.setAttribute("data-selected", "");
   emitSelectionChange();
 };
 
@@ -601,8 +675,9 @@ var selectTile = function selectTile(row, col) {
  * @returns {void}
  */
 var deselectTile = function deselectTile() {
+  var _buttons$last$row$las;
   var last = selectionState.selectedPath.pop();
-  if (last) buttons[last.row][last.col].classList.remove("selected-tile");
+  if (last) (_buttons$last$row$las = buttons[last.row][last.col].firstElementChild) === null || _buttons$last$row$las === void 0 || _buttons$last$row$las.removeAttribute("data-selected");
   emitSelectionChange();
 };
 
@@ -779,8 +854,62 @@ window.addEventListener("pointerup", function () {
   selectionState.isDragging = false;
 
   // Fully clear only if a drag has been stopped
-  if (selectionState.didDrag) clearSelection();
+  if (selectionState.didDrag && !selectionState.isAnimating) clearSelection();
 });
+
+/***/ }),
+
+/***/ "./src/js/components/scoring.js":
+/*!**************************************!*\
+  !*** ./src/js/components/scoring.js ***!
+  \**************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getPointsForWord: () => (/* binding */ getPointsForWord),
+/* harmony export */   updatePointsUI: () => (/* binding */ updatePointsUI)
+/* harmony export */ });
+/* eslint-disable no-magic-numbers */
+
+var pointsCounterElement = document.getElementById("pointsCounterElement");
+
+/**
+ * Calculates the number of points awarded for a word based on its length.
+ *
+ * Word lengths 0–4 award 1 point, length 5 awards 2 points,
+ * length 6 awards 3 points, length 7 awards 5 points,
+ * and any word longer than 7 characters awards 11 points.
+ *
+ * @param {number} length - The length of the word.
+ * @returns {number} The number of points awarded.
+ */
+var getPointsForWord = function getPointsForWord(length) {
+  var _scores$length;
+  // Length of words maps to index of the array to get correct points
+  var scores = [1, 1, 1, 1, 1, 2, 3, 5];
+
+  // Any word with a length >= 8 gets 11 points
+  return (_scores$length = scores[length]) !== null && _scores$length !== void 0 ? _scores$length : 11;
+};
+
+/**
+ * Updates the points counter displayed in the UI and briefly
+ * applies a pop animation to indicate the score has changed.
+ *
+ * @param {number} points - The player's current score.
+ * @returns {void}
+ */
+var updatePointsUI = function updatePointsUI(points) {
+  pointsCounterElement.textContent = points;
+
+  // Slight animation stuff
+  pointsCounterElement.classList.add("scale-125");
+  setTimeout(function () {
+    pointsCounterElement.classList.remove("scale-125");
+  }, 150);
+};
 
 /***/ }),
 
@@ -1255,7 +1384,7 @@ var GRID_CELL_BUTTON_CLASSES = ["xs:text-2xl", "grid", "cursor-pointer", "place-
  *
  * @constant {string[]}
  */
-var GRID_CELL_CONTENT_CLASSES = ["grid", "aspect-square", "w-15", "place-items-center", "rounded-full", "bg-white", "transition-colors", "duration-100", "ease-linear"];
+var GRID_CELL_CONTENT_CLASSES = ["grid", "aspect-square", "w-15", "place-items-center", "rounded-full", "bg-white", "transition-colors", "duration-100", "ease-linear", "data-selected:bg-gray-500", "data-selected:text-white", "data-correct:animate-correct-flash"];
 
 /**
  * Relative offsets for all eight adjacent directions
